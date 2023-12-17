@@ -1,1 +1,1 @@
-# react-native-album-app
+# Album App
