@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, View, TouchableOpacity, ScrollView } from "react-native";
 import { List } from "react-native-paper";
-import axios from "axios";
 import { StatusBar } from "expo-status-bar";
+import albumService from "../services/album";
 
 const AlbumListScreen = () => {
   const [albums, setAlbums] = useState([]);
@@ -10,11 +10,8 @@ const AlbumListScreen = () => {
   useEffect(() => {
     const getAlbums = async () => {
       try {
-        const response = await axios.get(
-          "https://jsonplaceholder.typicode.com/albums/?_limit=30"
-        );
-        console.log("Albums", response.data);
-        setAlbums(response.data);
+        const allAlbums = await albumService.getAlbums();
+        setAlbums(allAlbums);
       } catch (error) {
         console.error("Error fetching albums:", error);
       }
@@ -27,8 +24,18 @@ const AlbumListScreen = () => {
     console.log("An album", albumId);
   };
 
-  const handleDeleteIconPress = (albumId) => {
-    console.log("Delete icon pressed for album", albumId);
+  const handleDeleteIconPress = async (albumId) => {
+    try {
+      console.log("Delete icon pressed for album", albumId);
+
+      await albumService.deleteAlbum(albumId);
+
+      setAlbums((prevAlbums) =>
+        prevAlbums.filter((album) => album.id !== albumId)
+      );
+    } catch (error) {
+      console.error("Error deleting album:", error);
+    }
   };
 
   return (
