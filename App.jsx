@@ -1,20 +1,29 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import AlbumListScreen from "./components/AlbumListScreen";
+
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: "tomato",
+    accent: "yellow",
+  },
+};
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
+  console.log("App runs");
+
   return (
-    <View style={styles.container}>
-      <Text>Album app setup</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <PaperProvider theme={theme}>
+        <Stack.Navigator initialRouteName="AlbumList">
+          <Stack.Screen name="AlbumList" component={AlbumListScreen} />
+        </Stack.Navigator>
+      </PaperProvider>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
