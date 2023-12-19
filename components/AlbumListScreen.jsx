@@ -1,24 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { StyleSheet, View, TouchableOpacity, ScrollView } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import { List } from "react-native-paper";
 import { StatusBar } from "expo-status-bar";
 import albumService from "../services/album";
+import { setAlbums, deleteAlbum } from "../redux/albumSlice";
 
 const AlbumListScreen = () => {
-  const [albums, setAlbums] = useState([]);
+  const dispatch = useDispatch();
+  const albums = useSelector((state) => state.albums.data);
 
   useEffect(() => {
     const getAlbums = async () => {
       try {
         const allAlbums = await albumService.getAlbums();
-        setAlbums(allAlbums);
+        dispatch(setAlbums(allAlbums));
       } catch (error) {
         console.error("Error fetching albums:", error);
       }
     };
 
     getAlbums();
-  }, []);
+  }, [dispatch]);
 
   const handleAlbumPress = (albumId) => {
     console.log("An album", albumId);
@@ -30,9 +33,7 @@ const AlbumListScreen = () => {
 
       await albumService.deleteAlbum(albumId);
 
-      setAlbums((prevAlbums) =>
-        prevAlbums.filter((album) => album.id !== albumId)
-      );
+      dispatch(deleteAlbum(albumId));
     } catch (error) {
       console.error("Error deleting album:", error);
     }
