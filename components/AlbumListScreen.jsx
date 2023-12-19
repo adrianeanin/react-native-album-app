@@ -6,7 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import albumService from "../services/album";
 import { setAlbums, deleteAlbum } from "../redux/albumSlice";
 
-const AlbumListScreen = () => {
+const AlbumListScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const albums = useSelector((state) => state.albums.data);
 
@@ -25,6 +25,7 @@ const AlbumListScreen = () => {
 
   const handleAlbumPress = (albumId) => {
     console.log("An album", albumId);
+    navigation.navigate("Photo Grid", { albumId });
   };
 
   const handleDeleteIconPress = async (albumId) => {

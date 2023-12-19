@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Provider as ReduxProvider } from "react-redux";
 import store from "./redux/store";
 import AlbumListScreen from "./components/AlbumListScreen";
+import PhotoGridScreen from "./components/PhotoGridScreen";
 
 const theme = {
   ...DefaultTheme,
@@ -23,8 +24,9 @@ export default function App() {
     <ReduxProvider store={store}>
       <NavigationContainer>
         <PaperProvider theme={theme}>
-          <Stack.Navigator initialRouteName="AlbumList">
-            <Stack.Screen name="AlbumList" component={AlbumListScreen} />
+          <Stack.Navigator initialRouteName="Album List">
+            <Stack.Screen name="Album List" component={AlbumListScreen} />
+            <Stack.Screen name="Photo Grid" component={PhotoGridScreen} />
           </Stack.Navigator>
         </PaperProvider>
       </NavigationContainer>

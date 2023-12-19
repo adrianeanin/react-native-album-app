@@ -12,6 +12,18 @@ const getAlbums = async () => {
   }
 };
 
+const getPhotosByAlbum = async (albumId) => {
+  try {
+    const response = await axios.get(
+      `https://jsonplaceholder.typicode.com/albums/${albumId}/photos?_limit=30`
+    );
+    console.log("Photos", response.data);
+    return response.data;
+  } catch (error) {
+    throw error.response;
+  }
+};
+
 const deleteAlbum = async (id) => {
   try {
     const response = await axios.delete(
@@ -26,4 +38,5 @@ const deleteAlbum = async (id) => {
 export default {
   getAlbums,
   deleteAlbum,
+  getPhotosByAlbum,
 };
