@@ -1,14 +1,25 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, TouchableOpacity, ScrollView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { List, MD3Colors } from "react-native-paper";
 import { StatusBar } from "expo-status-bar";
 import albumService from "../services/album";
 import { setAlbums, deleteAlbum } from "../redux/albumSlice";
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
+import { RootState } from "../redux/store";
 
-const AlbumListScreen = ({ navigation }) => {
+type AlbumListScreenNavigationProp = NavigationProp<
+  ParamListBase,
+  "Photo Grid"
+>;
+
+const AlbumListScreen = ({
+  navigation,
+}: {
+  navigation: AlbumListScreenNavigationProp;
+}) => {
   const dispatch = useDispatch();
-  const albums = useSelector((state) => state.albums.data);
+  const albums = useSelector((state: RootState) => state.albums.data);
 
   useEffect(() => {
     const getAlbums = async () => {
@@ -23,26 +34,21 @@ const AlbumListScreen = ({ navigation }) => {
     getAlbums();
   }, [dispatch]);
 
-  const handleAlbumPress = (albumId) => {
-    console.log("An album", albumId);
+  const handleAlbumPress = (albumId: number) => {
     navigation.navigate("Photo Grid", { albumId });
   };
 
-  const handleDeleteIconPress = async (albumId) => {
+  const handleDeleteIconPress = async (albumId: number) => {
     try {
-      console.log("Delete icon pressed for album", albumId);
-
       await albumService.deleteAlbum(albumId);
-
       dispatch(deleteAlbum(albumId));
     } catch (error) {
       console.error("Error deleting album:", error);
     }
   };
-
   return (
     <ScrollView style={styles.scrollView}>
-      {albums.map((album) => (
+      {albums.map((album: { id: number; title: string }) => (
         <View key={album.id} style={styles.albumContainer}>
           <TouchableOpacity onPress={() => handleAlbumPress(album.id)}>
             <List.Item
@@ -51,7 +57,6 @@ const AlbumListScreen = ({ navigation }) => {
               style={styles.albumText}
               titleStyle={{ color: "#120B10" }}
               descriptionStyle={{ color: "#8A8FBA" }}
-              ellipsizeMode="tail"
             />
           </TouchableOpacity>
 

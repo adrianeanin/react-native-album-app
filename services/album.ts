@@ -5,32 +5,30 @@ const getAlbums = async () => {
     const response = await axios.get(
       "https://jsonplaceholder.typicode.com/albums/?_limit=30"
     );
-    console.log("Albums", response.data);
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     throw error.response;
   }
 };
 
-const getPhotosByAlbum = async (albumId) => {
+const getPhotosByAlbum = async (albumId: number) => {
   try {
     const response = await axios.get(
       `https://jsonplaceholder.typicode.com/albums/${albumId}/photos?_limit=30`
     );
-    console.log("Photos", response.data);
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     throw error.response;
   }
 };
 
-const deleteAlbum = async (id) => {
+const deleteAlbum = async (id: number) => {
   try {
     const response = await axios.delete(
       `https://jsonplaceholder.typicode.com/albums/${id}`
     );
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     throw error.response;
   }
 };
