@@ -26,9 +26,10 @@ This React Native Photo Album App is a mobile application that allows users to e
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/your/repository.git`
-2. Navigate to the project directory: `cd your-project-directory`
-3. Install dependencies using Yarn: `yarn install`
+1. Fork the repository.
+2. Clone the repository: `git clone https://github.com/yourFork/repository.git`
+3. Navigate to the project directory: `cd your-project-directory`
+4. Install dependencies using Yarn: `yarn install`
 
 ## Usage
 
